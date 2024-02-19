@@ -103,3 +103,76 @@ if (localStorage.getItem("theme") === "light_theme") {
   document.body.classList.remove("light_theme");
   document.body.classList.add("dark_theme");
 }
+
+
+// Text to be typed for title
+var titleText = "Hi, I am Raj";
+var titleElement = document.querySelector('.typing-title'); // Selecting the span element with class "typing-title"
+
+// Text to be typed for different roles
+var roles = ["a Leader", "a BCA Student", "a Mentor", "an Innovator", "a Problem Solver"];
+var currentIndex = 0; // Initialize index for roles
+
+// Function to type title
+function typeTitle() {
+  var titleLength = titleText.length;
+  var currentCharacter = 0;
+  var typingInterval = setInterval(function() {
+    titleElement.innerHTML += titleText[currentCharacter];
+    currentCharacter++;
+    if (currentCharacter === titleLength) {
+      clearInterval(typingInterval);
+      setTimeout(function() {
+        // After typing the title, start typing different roles
+        typeRole();
+      }, 1000); // Delay before typing roles
+    }
+  }, 100); // Typing speed for title
+}
+
+// Function to type different roles
+function typeRole() {
+  var role = roles[currentIndex];
+  var roleLength = role.length;
+  var currentCharacter = 0;
+  var typingInterval = setInterval(function() {
+    var coloredText = "<span style='color: ";
+    // Color roles based on their index
+    switch (currentIndex) {
+      case 0:
+        coloredText += "green;'>"; // Leader in blue
+        break;
+      case 1:
+        coloredText += "green;'>"; // BCA Student in green
+        break;
+      case 2:
+        coloredText += "green;'>"; // Mentor in orange
+        break;
+      case 3:
+        coloredText += "green;'>"; // Innovator in purple
+        break;
+      case 4:
+        coloredText +="green;'>"; // Problem Solver in red
+        break;
+      default:
+        coloredText +="green;'>"; // Default color
+        break;
+    }
+    titleElement.innerHTML = titleText + "   " + coloredText + role.slice(0, currentCharacter + 1) + "</span>";
+    currentCharacter++;
+    if (currentCharacter === roleLength) {
+      clearInterval(typingInterval);
+      currentIndex++;
+      if (currentIndex === roles.length) {
+        currentIndex = 0; // Reset index to loop through roles
+      }
+      setTimeout(function() {
+        // After typing the role, start typing the next role
+        typeRole();
+      }, 1500); // Delay before typing next role
+    }
+  }, 100); // Typing speed for roles
+}
+
+// Start typing title initially
+typeTitle();
